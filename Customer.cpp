@@ -1,6 +1,6 @@
     #include "Customer.h"
 
-unordered_set<string> existingUsernames;
+unordered_map<string,Customer> existingCustomers;
 
     float Customer::getBalance() {
         return balance;
@@ -8,6 +8,7 @@ unordered_set<string> existingUsernames;
 
     void Customer::rechargeBalance(float amount) {
         balance+= amount;
+        existingCustomers[username] = *this;
     }
 
     void Customer::changePassword() {
@@ -18,6 +19,7 @@ unordered_set<string> existingUsernames;
             cout<<"Please Enter New Password: ";
             cin >> newPassword;
             password=newPassword;
+            existingCustomers[username] = *this;
         }
         else {
             cout<<"Password Incorrect."<<endl;
@@ -28,13 +30,13 @@ unordered_set<string> existingUsernames;
         string newUsername;
         cout<<"Please Enter New Username: ";
         cin>>newUsername;
-        if(existingUsernames.find(newUsername)!=existingUsernames.end()) {
+        if(existingCustomers.find(newUsername)!=existingCustomers.end()) {
             cout<<"Username Already Taken."<<endl;
         }
         else {
-            existingUsernames.erase(username);
+            existingCustomers.erase(username);
             username = newUsername;
-            existingUsernames.insert(username);
+            existingCustomers[username] = *this;
 
         }
     }
@@ -46,8 +48,9 @@ unordered_set<string> existingUsernames;
         cout << "Enter password: ";
         cin >> pass;
 
-        if(uname == username && pass==password) {
-            cout << "Login successful. Welcome, " << username << "!" << endl;
+        if(existingCustomers.find(uname)!= existingCustomers.end() && existingCustomers[uname].password == pass) {
+            cout << "Login successful. Welcome, " << uname << "!" << endl;
+            *this = existingCustomers[uname];
             return true;
         }
         cout << "Login failed. Incorrect username or password." << endl;
@@ -60,7 +63,7 @@ unordered_set<string> existingUsernames;
         cout << "Enter a username: ";
         cin >> uname;
 
-        if (existingUsernames.find(uname) != existingUsernames.end()) {
+        if (existingCustomers.find(uname) != existingCustomers.end()) {
             cout << "Username already exists. Please choose another." << endl;
             return false;
         }
@@ -70,7 +73,7 @@ unordered_set<string> existingUsernames;
         username = uname;
         password = pass;
         balance = 0.0;
-        existingUsernames.insert(uname);
+        existingCustomers[uname] = *this;
 
         cout << "Account created successfully!" << endl;
         return true;

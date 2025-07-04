@@ -2,10 +2,9 @@
 #define CUSTOMER_H
 #include <string>
 #include <iostream>
-#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 
-extern unordered_set<string> existingUsernames;
 
 class Customer {
 
@@ -23,6 +22,7 @@ public:
     bool createAccount();
 };
 
+extern unordered_map<string,Customer> existingCustomers;
 
 
 #endif //CUSTOMER_H

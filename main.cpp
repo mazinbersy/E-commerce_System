@@ -7,8 +7,8 @@ using namespace std;
 // Simulate product database
 vector<Product> productDatabase = {
     Product("Milk", 2.5, 10, time(0) + 86400, true, 1.0),
-    Product("Bread", 1.5, 20, time(0) + 172800, true, 0.5),
-    Product("Cheese", 4.0, 5, time(0) - 10000, true, 0.8), //EXPIRED
+    Product("Bread", 1.5, 20, time(0) + 172800, true, 1.0),
+    Product("Cheese", 4.0, 5, time(0) - 10000, true, 1.0), //EXPIRED
     Product("Laptop", 1000.0, 2, time(0) + 864000, false, 2.5)
 };
 
