@@ -1,9 +1,9 @@
 #include "Cart.h"
 
-void Cart::add(product p, float quantity) {
+void Cart::add(Product& p, float quantity) {
 
     if(expired(p)) {
-        cout<<"Sorry, Product "<<p.name<<" has Expired."<<endl;
+        cout<<"Sorry, Product "<<p.getName()<<" has Expired."<<endl;
         return;
     }
     if(outOfStock(p,quantity)) {
@@ -11,20 +11,24 @@ void Cart::add(product p, float quantity) {
         return;
     }
     products.push_back({p,quantity});
-    sum += quantity * p.price;
+    sum += quantity * p.getPrice();
+    float newQ = p.getQuantity() - quantity;
+    p.setQuantity(newQ);
     cout<<"Product Added Successfully."<<endl;
 }
 
-void Cart::remove(int index, float quantity) {
+void Cart::remove(int index, float quantity, Product& p) {
     if(!empty()) {
         if(products[index].second <= quantity) {
-            sum -= products[index].first.price * products[index].second;
+            sum -= p.getPrice() * products[index].second;
             products.erase(products.begin() + index);
+            p.setQuantity(p.getQuantity() + products[index].second);
             cout<<"Product Removed Successfully."<<endl;
         }
         else {
-            sum -= products[index].first.price * quantity;
+            sum -= p.getPrice() * quantity;
             products[index].second -= quantity;
+            p.setQuantity(p.getQuantity() + quantity);
             cout<<"Quantity Decreased Successfully."<<endl;
 
         }
@@ -45,14 +49,14 @@ bool Cart::empty() {
 }
 
 
-bool Cart::outOfStock(product p, float quantity) {
-    if(p.quantity < quantity)
+bool Cart::outOfStock(Product p, float quantity) {
+    if(p.getQuantity() < quantity)
         return true;
     return false;
 }
 
-bool Cart::expired(product p) {
-    if(p.expiry < time(0))
+bool Cart::expired(Product p) {
+    if(p.getExpiry() < time(0))
         return true;
     return false;
 }
@@ -63,17 +67,22 @@ void Cart::displayCart() {
         return;
     }
 
-    cout << "\nCart Contents:\n";
-    for (size_t i = 0; i < products.size(); ++i) {
-        const auto& item = products[i];
-        cout << i << ". " << item.first.name
+    cout << "Cart Contents:"<<endl;
+    for (int i = 0; i < products.size(); ++i) {
+        auto item = products[i];
+        cout << i << ". " << item.first.getName()
              << " | Quantity: " << item.second
-             << " | Unit Price: $" << item.first.price
-             << " | Subtotal: $" << item.second * item.first.price << endl;
+             << " | Unit Price: $" << item.first.getPrice()
+             << " | Subtotal: $" << item.second * item.first.getPrice() << endl;
     }
     cout << "Total: $" << sum << endl;
 }
-vector<pair<product, float>>& Cart::getProducts() {
+vector<pair<Product, float>>& Cart::getProducts() {
     return products;
+}
+
+void Cart::clearCart() {
+    products.clear();
+    sum =0.0;
 }
 
