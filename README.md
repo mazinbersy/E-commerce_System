@@ -15,7 +15,7 @@ This is a C++ console application simulating a basic e-commerce system. It allow
 - ❌ **Product Expiry Handling**
 - 🔐 **Username and Password Changes**
 
-⚠️ **Note**
+⚠️ **Note** : 
 Login works only if an account is created during the same runtime. All user data is stored in memory and will be lost once the program terminates. Persistent storage (e.g., file or database) is not implemented.
 
 ---
