@@ -2,14 +2,13 @@
 #include "Customer.h"
 #include "Product.h"
 #include "ShippingService.h"
-#include <iostream>
 using namespace std;
 
 // Simulate product database
 vector<Product> productDatabase = {
     Product("Milk", 2.5, 10, time(0) + 86400, true, 1.0),
     Product("Bread", 1.5, 20, time(0) + 172800, true, 0.5),
-    Product("Cheese", 4.0, 5, time(0) - 10000, true, 0.8),
+    Product("Cheese", 4.0, 5, time(0) - 10000, true, 0.8), //EXPIRED
     Product("Laptop", 1000.0, 2, time(0) + 864000, false, 2.5)
 };
 
@@ -72,16 +71,20 @@ int main() {
     int choice;
 
     cout << "Welcome to the Shopping System!" << endl;
+    bool valid = false;
+    do {
     cout << "1. Create Account" << endl << "2. Login" << endl << "OR Enter Anything Else to Exit " << endl << "Choose: ";
     cin >> choice;
 
-    if (choice == 1) {
-        if (!customer.createAccount()) return 0;
-    } else if (choice == 2) {
-        if (!customer.login()) return 0;
-    } else {
-        return 0;
-    }
+
+        if (choice == 1) {
+           valid= customer.createAccount();
+        } else if (choice == 2) {
+           valid = customer.login();
+        } else {
+            return 0;
+        }
+    } while(!valid);
 
     while (true) {
         cout << "----- Menu -----" << endl;
@@ -146,18 +149,21 @@ int main() {
             checkout(customer, cart, shipService);
         } else if (choice == 9) {
             cout << "Logged out successfully!" << endl;
-            cout << "1. Create Account" << endl << "2. Login" << endl << "OR Enter Anything Else to Exit " << endl << "Choose: ";
-            cin >> choice;
-
-            if (choice == 1) {
-                if (!customer.createAccount()) return 0;
-            } else if (choice == 2) {
-                if (!customer.login()) return 0;
-            } else {
-                cout << "THANK YOU FOR SHOPPING WITH US!" << endl;
-                return 0;
-            }
-        } else {
+            bool valid = false;
+            do {
+                cout << "1. Create Account" << endl << "2. Login" << endl << "OR Enter Anything Else to Exit " << endl << "Choose: ";
+                cin >> choice;
+                if (choice == 1) {
+                    valid= customer.createAccount();
+                } else if (choice == 2) {
+                    valid = customer.login();
+                } else {
+                    cout<<"THANK YOU FOR SHOPPING WITH US!"<<endl;
+                    return 0;
+                }
+            } while(!valid);
+        }
+        else {
             cout << "Invalid option." << endl;
         }
     }
