@@ -89,10 +89,11 @@ int main() {
              << "2. Add to Cart" << endl
              << "3. Remove from Cart" << endl
              << "4. View Cart Total" << endl
-             << "5. Recharge Balance" << endl
-             << "6. Checkout" << endl
-             << "7. View Cart" << endl
-             << "8. Logout" << endl
+             << "5. View Cart" << endl
+             << "6. View Balance" <<endl
+             << "7. Recharge Balance" << endl
+             << "8. Checkout" << endl
+             << "9. Logout" << endl
              << "Choose: ";
         cin >> choice;
 
@@ -129,17 +130,21 @@ int main() {
             cart.remove(index, qty, productDatabase[index]);
         } else if (choice == 4) {
             cout << "Cart total: $" << cart.getSum() << endl;
-        } else if (choice == 5) {
+        }
+        else if (choice == 5) {
+            cart.displayCart();
+        }
+        else if(choice == 6)
+            cout<<"Current Balance: $" <<customer.getBalance()<<endl;
+        else if (choice == 7) {
             float amount;
             cout << "Enter amount to recharge: ";
             cin >> amount;
             customer.rechargeBalance(amount);
             cout << "New balance: $" << customer.getBalance() << endl;
-        } else if (choice == 6) {
-            checkout(customer, cart, shipService);
-        } else if (choice == 7) {
-            cart.displayCart();
         } else if (choice == 8) {
+            checkout(customer, cart, shipService);
+        } else if (choice == 9) {
             cout << "Logged out successfully!" << endl;
             cout << "1. Create Account" << endl << "2. Login" << endl << "OR Enter Anything Else to Exit " << endl << "Choose: ";
             cin >> choice;
