@@ -15,14 +15,12 @@ private:
     float sum=0.0;
     vector<pair<Product, float>> products;
 
-
 public:
     void add(Product&, float);
     void remove(int, float, Product&);
     float getSum();
     bool empty();
     bool outOfStock(Product, float);
-    bool expired(Product);
     void displayCart();
     vector<pair<Product, float>>& getProducts();
     void clearCart();

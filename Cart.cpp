@@ -2,7 +2,7 @@
 
 void Cart::add(Product& p, float quantity) {
 
-    if(expired(p)) {
+    if(p.isExpired()) {
         cout<<"Sorry, Product "<<p.getName()<<" has Expired."<<endl;
         return;
     }
@@ -55,11 +55,6 @@ bool Cart::outOfStock(Product p, float quantity) {
     return false;
 }
 
-bool Cart::expired(Product p) {
-    if(p.getExpiry() < time(0))
-        return true;
-    return false;
-}
 
 void Cart::displayCart() {
     if (products.empty()) {

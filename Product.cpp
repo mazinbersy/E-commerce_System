@@ -32,13 +32,14 @@ void Product::setQuantity(float newQty) {
 }
 
 bool Product::isExpired() {
+    if(expiry==-1) return false; //product doesn't expire
     return expiry < time(0);
 }
 
 void Product::display() {
     cout << name << " - $" << price
          << " | Stock: " << quantity
-         << (expiry < time(0) ? " [EXPIRED]" : "")
+         << (isExpired() ? " [EXPIRED]" : "")
          << (shipping ? " | Shippable" : " | Pickup only")
          << endl;
 }
