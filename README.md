@@ -39,4 +39,7 @@ Login works only if an account is created during the same runtime. All user data
 
 ```bash
 ./shop
+```
+## ✅Sample Run
+![Sample Run](https://github.com/user-attachments/assets/14fda03e-0567-4229-8e11-8462832fd2f8)
 
